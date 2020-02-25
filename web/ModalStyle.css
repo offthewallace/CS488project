@@ -1,0 +1,92 @@
+.modalDiv {
+    text-align: center;
+}
+
+[type="file"] {
+    height: 0;
+    overflow: hidden;
+    width: 0;
+}
+
+[type="file"] + label, [type="submit"] {
+    background: #f93d7b;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    padding: 20px;
+    margin: 5px;
+    position: relative;
+}
+
+[type="file"]:hover + label:hover, [type="submit"]:hover {
+    background-color: white;
+    color: #f93d7b;
+    transition: 0.3s;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    width: 580px;
+    background: #FFFFFF;
+    box-shadow: 2px 2px 20px 1px;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    line-height: 40px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    padding: 20px;
+    display: flex;
+    border-bottom: 1px solid #eeeeee;
+    color: rgba(117, 27, 38, 0.84);
+    font-weight: bold;
+    justify-content: space-between;
+}
+
+
+.modal-body {
+    position: relative;
+    padding: 20px;
+}
+
+p {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    color: #1D1C1D;
+    font-size: 14px;
+}
+
+.btn-close, .btn-close[type=file] {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    width: 120px;
+    padding: 0;
+    color: #f93d7b;
+    border: 0;
+    background-color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-close:hover {
+    text-decoration: underline;
+    background-color: white;
+    color: #f93d7b;
+}
