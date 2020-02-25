@@ -47,8 +47,9 @@
     .text-danger .small-text {
         margin-bottom: 1ch
     }
+
     .btn {
-        background-color: #bd1651;
+        background-color: #751b26;
         color: white; border-radius: 5px
     }
 

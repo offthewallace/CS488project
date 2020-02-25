@@ -7,8 +7,8 @@
                 <p v-if="loaded" class="text-danger small-text">{{errors['name']}}</p>
             </div>
             <div class="col-md-4 mb-3">
-                <label class="bold">Surname</label>
-                <input type="text" class="form-control" placeholder="Surname" v-model="userRegister.surname" required>
+                <label class="bold">Last Name</label>
+                <input type="text" class="form-control" placeholder="Last name" v-model="userRegister.surname" required>
                 <p v-if="loaded" class="text-danger small-text">{{errors['surname']}}</p>
             </div>
             <div class="col-md-4 mb-3">
@@ -25,9 +25,9 @@
                 <p v-if="loaded" class="text-danger small-text">{{errors['birth']}}</p>
             </div>
             <div class="col-md-4 mb-3">
-                <label class="bold">Gender</label>
-                <input type="radio" value="FEMALE" v-model="userRegister.gender">Female
-                <input type="radio" value="MALE" v-model="userRegister.gender">Male<br>
+                <label class="bold">Gender &nbsp</label>
+                <input type="radio" value="FEMALE" v-model="userRegister.gender"> Female &nbsp
+                <input type="radio" value="MALE" v-model="userRegister.gender"> Male<br>
                 <span v-if="loaded" class="text-danger small-text">{{errors['gender']}}</span>
             </div>
         </div>
@@ -58,8 +58,8 @@
                 <span v-if="loaded" class="text-danger small-text">{{errors['password']}}</span>
             </div>
             <div class="col-md-4 mb-3">
-                <label style="font-weight: bold">Repeat password</label>
-                <input type="password" v-model="userRegister.password2" placeholder="Repeat your password">
+                <label style="font-weight: bold">Reenter Password</label>
+                <input type="password" v-model="userRegister.password2" placeholder="Reenter password">
             </div>
         </div>
         <span class="text-danger small-text"></span>
@@ -163,7 +163,7 @@
     }
 
     .btn-styles {
-        background-color: #bd1651;
+        background-color: #751b26;
         color: white;
         border-radius: 5px
     }
