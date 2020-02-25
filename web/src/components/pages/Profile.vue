@@ -1,6 +1,9 @@
 <template>
-    <div class="bg">
+    <div class="bg" style="background-color: rgba(248,211,173,0.06)">
         <Header></Header>
+
+        <hr>
+        <hr>
 
         <div v-if="!loaded" class="container align-items-center justify-content-center base">
             <img src="../../assets/load3.gif"/>
@@ -8,7 +11,7 @@
         <div v-if="loaded" class="container align-items-center justify-content-center fixed">
             <div class="row">
                 <div class="col-sm-1"></div>
-                <div class="col-sm-10 border styled">
+                <div class="col-sm-10 styled border">
                     <div class="row margin">
                         <div class="col-sm">
                             <div id="demo" class="carousel slide" data-ride="carousel">
@@ -457,7 +460,7 @@
     }
 
     .btn {
-        background-color: #bd1651;
+        background-color: #751b26;
         color: white;
         border-radius: 5px;
         margin-top: 2vh
@@ -467,7 +470,7 @@
     }
 
     .fa-2x {
-        color: #bd1651;
+        color: #751b26;
     }
 
     .aStyle {

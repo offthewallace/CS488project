@@ -1,5 +1,5 @@
 <template>
-    <div class="bg">
+    <div class="bg" style="background-color: rgba(248,211,173,0.06)">
         <Header></Header>
         <div v-if="!loaded" class="container align-items-center justify-content-center margin4">
             <img src="../../assets/load3.gif"/>
@@ -75,7 +75,7 @@
                     NO MORE USERS
                 </div>
                 <div class="col-sm-1"></div>
-                <div class="col-sm-4 colStyle1 base">
+                <div class="col-sm-4 colStyle1 base border">
                     <div class="row margin4">
                         <div class="col-sm text-right">
                             <a>
@@ -289,7 +289,8 @@
         margin-top: 68px;
     }
     .colored {
-        background-color: #fbeeff
+        background-color: #751b26;
+        color: white;
     }
 
     .container-fix {
@@ -298,12 +299,12 @@
 
     .border {
         background-color: #F4F4F4;
-        border-radius: 5px;
-        border: #3b2b49
+        border-radius: 10px;
+        border: #3b2b49;
     }
 
     .fa-2x, .fa-4x {
-        color: #bd1651
+        color: #751b26
     }
 
     .rowStyle1 {
@@ -312,7 +313,7 @@
 
     .colStyle1 {
         background-color: #F4F4F4;
-        border-radius: 5px
+        border-radius: 5px;
     }
 
     .colStyle2 {
@@ -334,7 +335,7 @@
     }
 
     .span2 {
-        background-color: #fbeeff;
+        background-color: rgba(248,211,173,0.06);
         border-radius: 5px;
     }
 
@@ -368,7 +369,7 @@
     }
 
     .btnStyle {
-        background-color: #bd1651;
+        background-color: #751b26;
         color: white;
         border-radius: 5px
     }

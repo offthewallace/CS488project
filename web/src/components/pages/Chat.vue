@@ -320,7 +320,7 @@
     }
 
     .fa-2x {
-        color: #bd1651;
+        color: #751b26;
         float: right;
     }
 
