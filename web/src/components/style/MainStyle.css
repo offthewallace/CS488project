@@ -4,7 +4,7 @@
 
 body {
     color: #3b2b49;
-    background: #cfbad2;
+    background: rgba(233, 199, 165, 0.14);
     font-family: 'Exo', serif;
 }
 
@@ -15,7 +15,7 @@ a {
 #app {
     font-family: 'Exo', fantasy;
     height: 100vh;
-    background-color: #cfbad2;
+    background-color: rgba(248, 211, 173, 0.31);
     color: #3b2b49;
 }
 
@@ -51,7 +51,7 @@ button {
     text-align: center;
     font-size: 20px;
     width: 120px;
-    color: #bd1651;
+    color: #751b26;
     height: 40px;
     margin: 5px;
 }
@@ -79,7 +79,7 @@ button {
 
 .login:active, .signup:active {
     background-color: #EAE3EA;
-    color: #bd1651;
+    color: #751b26;
     opacity: 0.8;
 }
 
@@ -88,7 +88,7 @@ button:hover, .mainButton:hover, .button:hover {
     background-color: #EAE3EA;
     opacity: 0.8;
     transition: 0.3s;
-    color: #bd1651;
+    color: #751b26;
 }
 
 [type="file"] {
@@ -128,7 +128,7 @@ button:hover, .mainButton:hover, .button:hover {
 }
 
 .bg {
-    background-color: #cfbad2;
+    background-color: rgba(248, 211, 173, 0.04);
 }
 
 .my-custom-scrollbar {

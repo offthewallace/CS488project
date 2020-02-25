@@ -55,7 +55,7 @@
     padding: 20px;
     display: flex;
     border-bottom: 1px solid #eeeeee;
-    color: #f93d7b;
+    color: rgba(117, 27, 38, 0.84);
     font-weight: bold;
     justify-content: space-between;
 }
