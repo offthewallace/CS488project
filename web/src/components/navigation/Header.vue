@@ -1,22 +1,22 @@
 <template>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #bd1651; color: white; ">
-        <a class="navbar-brand" href="#">DatingHub</a>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #751b26; color: white; ">
+        <a class="navbar-brand" href="#" style="font-size: x-large">DatingHub</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar" style="background-color: #bd1651">
+        <div class="collapse navbar-collapse" id="collapsibleNavbar" style="background-color: rgba(156,36,50,0.8)">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/profile">MY PROFILE</router-link>
+                    <router-link class="nav-link" to="/profile" style="color: white">MY PROFILE</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/browse">BROWSE</router-link>
+                    <router-link class="nav-link" to="/browse" style="color: white">BROWSE</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/chat">CHATS</router-link>
+                    <router-link class="nav-link" to="/chat" style="color: white">CHATS</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/stats">STATS</router-link>
+                    <router-link class="nav-link" to="/stats" style="color: white">STATS</router-link>
                 </li>
                 <li>
                     <a>
