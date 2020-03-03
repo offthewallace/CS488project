@@ -392,7 +392,16 @@
             
             onUpload() {
 
-          
+               var serverID="http://"+this.firstImg.split("/")[2];
+               console.log(serverID);
+               console.log(this.file.name);
+               var tmpname= serverID+"/"+this.file.name;
+               console.log(tmpname);
+               this.firstImg= tmpname;
+               let imgData = JSON.stringify(this.file);
+               console.log(imgData);
+
+                
                 //console.log(typeof this.file);
                 //let imgData = JSON.stringify(this.file);
                 //console.log(imgData);
