@@ -64,7 +64,7 @@
         </div>
         <span class="text-danger small-text"></span>
         <div class="w-100"></div>
-        <button class="btn btn-styles" v-on:click="register">
+        <button class="btn btn-styles" v-on:click="register + addUser">
             Register
         </button>
     </form>
@@ -72,6 +72,7 @@
 
 <script>
     import Countries from '../resources/countries.json'
+    import axios from "axios";
 
     export default {
         name: "Registration",
@@ -107,6 +108,19 @@
 
         },
         methods: {
+            addUser: async function () {
+                try {
+                    const params = {
+                        "email": "email",
+                        "password": "password"
+                }
+                    await axios.post("https://306y2aghzl.execute-api.us-east-1.amazonaws.com/usr/users/{email}", params);
+
+                } catch (err) {
+                    console.log('error: $(err)');
+                }
+            },
+
             getCities: function () {
                 let country = this.userRegister.country;
                 return Countries[country]
