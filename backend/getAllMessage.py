@@ -26,6 +26,7 @@ def lambda_handler(event, context):
     if "Items" in response:
         result=response2['Items']+result
     print(result)
+    result=sorted(result, key = lambda i: i['datesend'])
 
     
     return {
