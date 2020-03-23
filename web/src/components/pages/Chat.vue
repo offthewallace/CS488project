@@ -55,13 +55,13 @@
                              v-chat-scroll="{always: false, smooth: true}">
                             <div style="margin-top: 50px"></div>
                             <div v-for="m in messages">
-                                <div v-if="m.fromID === user.username" class="row">
+                                <div v-if="m.fromID !== friend.username" class="row">
                                     <div class="col-md-6 col-sm-6"></div>
                                     <div class="col-md-4 col-sm-4">
-                                        <div class="colStyle3">
-                                            <span>{{m.message}}</span>
+                                        <div class="colStyle2">
+                                            <span>{{m.message}}</span> <!-- fromID toID friend.username -->
                                         </div>
-                                        <span class="span">{{m.dateSent}}</span>
+                                        <span class="span">{{m.datesend}}</span>
                                     </div>
                                     <div v-if="m.myPhoto" class="col-md-2 col-sm-2">
                                         <img v-bind:src=" user.image"
@@ -74,12 +74,25 @@
                                         <img v-bind:src="friend.image"
                                              class="chatimg rounded-circle">
                                     </div>
-                                    <div class="col-md-2 col-xs-2" v-else></div>
-                                    <div class="col-md-4 col-xs-4">
-                                        <div class="colStyle2">
-                                            <span>{{m.message}}</span>
+                                    <div v-if="m.fromID === friend.username" class="row">
+                                        <div class="col-md-2 col-xs-2" ></div>
+                                        <div class="col-md-10 col-xs-6">
+                                            <div class="colStyle3">
+                                                <span>{{m.message}}</span>
+                                            </div>
+                                            <span class="span">{{m.datesend}}</span>
                                         </div>
-                                        <span class="span">{{m.datesend}}</span>
+                                        <!--<div v-if="m.myPhoto" class="col-md-2 col-sm-2">
+                                            <img v-bind:src=" user.image"
+                                                 class="chatimg rounded-circle">
+                                        </div>
+                                        <div class="col-md-2 col-sm-2" v-else></div>
+                                    </div>
+                                    <div v-else class="row">
+                                        <div class="col-md-2 col-xs-2" v-if="m.friendPhoto">
+                                            <img v-bind:src="friend.image"
+                                                 class="chatimg rounded-circle">
+                                        </div>-->
                                     </div>
                                     <div class="col-md-6 col-xs-6"></div>
                                 </div>
@@ -167,7 +180,7 @@
             },
             goBack: function () {
                 this.isMatches = true;
-                this.chatSelected = false;fromUserId
+                this.chatSelected = false;
                 this.isNoChat = false;
                 clearTimeout(this.interval);
                 if (!this.isMobile()){
@@ -182,10 +195,10 @@
             this.id = this.user.username;
             console.log("ID:"+this.id)
             this.loaded3 = true;
-                hello
+
             },
             sendSeen: function (friend) {
-                AXIOS.get('/messagesss/' + friend.username).then(
+                AXIOS.get('/messages/' + friend.username).then(
                 );
                 if (this.isMobile()){
                     this.isMatches = false;
@@ -216,7 +229,7 @@
                 }
                 this.user=localStorage.getItem('user');
                 this.friend = friend;
-                this.messageView.fromUserId = "123@456.com";
+                this.messageView.fromUserId = "123@456.com"; //need user here
                 this.messageView.toUserId = friend.username;
                 this.chatSelected = true;
                 this.isNoChat = false;
@@ -228,14 +241,14 @@
 
                 send=JSON.stringify(send)
 
-                AXIOS.get('message/?fromid=' + "123@456.com"
+                AXIOS.get('message/?fromid=' + "hello"
                 + '&toid=' + friend.username)
                     .then(response => {
                         console.log(response.data);
                         this.messages = response.data;
                         for (let m in this.messages) {
-                            this.messages[m].datesend = this.parseDate(this.messages[m].datesend);
-                            if (friend.username === this.messages[m].fromID) {
+                            //this.messages[m].datesend = this.parseDate(this.messages[m].datesend);
+                            if (friend.username === this.messages[m].toUserId) {
                                 this.messages[m].friendPhoto = this.friendPhoto;
                                 this.friendPhoto = false;
                                 this.myPhoto = true;
@@ -310,7 +323,7 @@
     }
 
     .colStyle2 {
-        background: #35815b;
+        background: rgba(30, 220, 87, 0.75);
         border-radius: 5px;
     }
 
