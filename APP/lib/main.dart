@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'swipe_feed_page.dart';
+import 'MyHomePage.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tinder cards demo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: SwipeFeedPage(),
+      home: MyHomePage(),
     );
   }
 }
