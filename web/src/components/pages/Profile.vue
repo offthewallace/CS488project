@@ -158,6 +158,7 @@
     import Countries from '../resources/countries.json'
     import Hobbies from '../resources/hobbies.json'
     import Header from '../navigation/Header.vue'
+    import axios from 'axios'
 
     export default {
         name: "Profile",
@@ -184,7 +185,7 @@
                 firstImg: {},
                 otherImg: [],
                 username: "",
-                file: "",
+                file: null, //""
                 matchingPercentage: {},
                 userHobbies: [],
                 hobbies: [],
@@ -391,6 +392,14 @@
             },
             
             onUpload() {
+
+               //this.firstImg =  this.file;
+               const fd = new FormData();
+               fd.append('image', this.file, this.file.name);
+               axios.post('', fd)
+                .then(res => {
+                    console.log(res)
+                });
 
                var serverID="http://"+this.firstImg.split("/")[2];
                console.log(serverID);

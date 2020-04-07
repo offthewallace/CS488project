@@ -26,7 +26,7 @@
                             </div>
                         </div>
                         <div class="row rowStyle1" v-else
-                             style="background-color: #FFFF99"
+                             style="background-color: floralwhite"
                              v-on:click="() => {getAllMessages(match);}">
                             <div class="col-4 colStyle1"><img v-bind:src="match.image"
                                                               class="favimg rounded-circle"></div>
@@ -46,7 +46,11 @@
                 </div>
                 <div v-if="chatSelected" class="col-sm-6">
                     <div class="row">
-                        <a v-on:click="goBack()"> <- CLOSE CHAT</a>
+                        <!--<a v-on:click="goBack()"> <- CLOSE CHAT</a>-->
+                        <button @click="goBack" type="button" class="button2"> &nbsp; <- CLOSE CHAT</button>
+                        <div class="wrapper">
+                            <button @click="ChatBot" type="button" class="button1">CHAT BOT</button>
+                        </div>
                     </div>
                     <div class="row">
                         <div class=" col-sm-12
@@ -120,6 +124,7 @@
                                 <font-awesome-icon icon="paper-plane" class="fa-2x"/>
                             </a>
                         </div>
+
                     </div>
                 </div>
                 <div v-else class="col-sm-6 colored" v-if="isNoChat">
@@ -281,7 +286,12 @@
                 console.log(date);
                 //date = date[5] + date[6] + '.' + date[8] + date[9] + ' ' + date[11] + date[12] + ':' + date[14] + date[15]
                 return date
+            },
+
+            ChatBot: function () {
+
             }
+
         }
     }
 
@@ -289,6 +299,34 @@
 
 
 <style scoped>
+
+    .wrapper {
+        @include float-right;
+        margin-right: 5px;
+        /*-ms-flex: 0 0 80.666667%;*/
+        /*flex: 0 0 170%;*/
+        /*max-width: 80.666667%;*/
+    }
+
+    .button1 {
+        background-color: #751b26;
+        border: 1px solid white;
+        color: white;
+        margin-top: 2vh;
+        text-align: center;
+        float: right;
+    }
+
+    .button2 {
+        background-color: #751b26;
+        border: 1px solid white;
+        color: white;
+        margin-top: 2vh;
+        text-align: left;
+        float: right;
+        width: 78.072%;
+    }
+
     .base {
         margin-top: 68px;
     }
