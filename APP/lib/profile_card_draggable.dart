@@ -12,7 +12,7 @@ class ProfileCardDraggable extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expanded(
-            child: Image.asset('res/portrait.jpeg', fit: BoxFit.cover),
+            child: Image.asset('res/test.jpeg', fit: BoxFit.cover),
           ),
           Container(
               padding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),

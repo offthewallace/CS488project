@@ -50,6 +50,7 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           FloatingActionButton(
+            heroTag: 'refresh',
             mini: true,
             onPressed: () {},
             backgroundColor: Colors.white,
@@ -57,18 +58,21 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
           ),
           Padding(padding: EdgeInsets.only(right: 8.0)),
           FloatingActionButton(
+            heroTag: 'exit',
             onPressed: () {},
             backgroundColor: Colors.white,
             child: Icon(Icons.close, color: Colors.red),
           ),
           Padding(padding: EdgeInsets.only(right: 8.0)),
           FloatingActionButton(
+            heroTag: 'like',
             onPressed: () {},
             backgroundColor: Colors.white,
             child: Icon(Icons.favorite, color: Colors.green),
           ),
           Padding(padding: EdgeInsets.only(right: 8.0)),
           FloatingActionButton(
+            heroTag: 'star',
             mini: true,
             onPressed: () {},
             backgroundColor: Colors.white,

@@ -1,6 +1,72 @@
 import 'package:flutter/material.dart';
 import 'swipe_feed_page.dart';
 
+import 'dart:async';
+import 'dart:convert';
+
+
+import 'package:http/http.dart' as http;
+
+
+Future<user> createUser(String email,String password) async {
+  final http.Response response = await http.post(
+    'https://jsonplaceholder.typicode.com/albums',
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'email': email,
+      'password':password,
+    }),
+  );
+
+  if (response.statusCode == 201) {
+    return user.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Wrong password/email');
+  }
+}
+
+
+class user{
+  final String username;
+  final String bio;
+  final String birth;
+  final String city;
+  final String country;
+  final String gender;
+  final String name;
+  final String surname;
+  final String image;
+
+  user({
+    this.username,
+    this.bio,
+    this.birth,
+    this.city,
+    this.country,
+    this.gender,
+    this.name,
+    this.surname,
+    this.image});
+
+
+  factory user.fromJson(Map<String, dynamic> json) {
+    return user(
+      username: json['username'],
+      bio: json['bio'],
+      birth: json['birth'],
+      city: json['city'],
+      country: json['country'],
+      gender:json['gender'],
+      name:json['name'],
+      surname:json['surname'],
+      image:json['image']
+    );
+  }
+
+}
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -21,6 +87,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  String _password;
+  String _email;
 
   @override
   Widget build(BuildContext context) {
@@ -31,17 +99,20 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
 
-    final emailField = TextField(
-      obscureText: true,
+    final emailField = TextFormField(
+      onSaved: (value) => _email = value,
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Email",
           border:
           OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+
     );
 
-    final passwordField = TextField(
+
+    final passwordField = TextFormField(
+      onSaved: (value)=> _password = value,
       obscureText: true,
       style: style,
       decoration: InputDecoration(
