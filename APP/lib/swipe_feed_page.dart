@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tinder_cards/ProfilePage.dart';
+import 'package:tinder_cards/chat.dart';
 import 'cards_section_alignment.dart';
 import 'cards_section_draggable.dart';
 
@@ -18,7 +20,11 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
         centerTitle: true,
         backgroundColor: Colors.white,
         leading: IconButton(
-            onPressed: () {}, icon: Icon(Icons.settings, color: Colors.grey)),
+            onPressed: () {
+
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+
+            }, icon: Icon(Icons.settings, color: Colors.grey)),
         title: Switch(
           onChanged: (bool value) => setState(() => showAlignmentCards = value),
           value: showAlignmentCards,
@@ -26,7 +32,11 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
         ),
         actions: <Widget>[
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Chat()));
+
+              },
               icon: Icon(Icons.question_answer, color: Colors.grey)),
         ],
       ),

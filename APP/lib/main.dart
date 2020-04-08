@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'MyHomePage.dart';
+import 'package:tinder_cards/ProfilePage.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tinder cards demo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: MyHomePage(),
+      home: MyHomePage()
     );
   }
 }

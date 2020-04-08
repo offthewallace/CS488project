@@ -130,6 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
+
           Navigator.push(context, MaterialPageRoute(builder: (context) => SwipeFeedPage()));
         },
         child: Text("Login",

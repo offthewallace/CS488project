@@ -66,7 +66,7 @@ class MapScreenState extends State<ProfilePage>
                                       shape: BoxShape.circle,
                                       image: new DecorationImage(
                                         image: new ExactAssetImage(
-                                            'assets/images/as.png'),
+                                            'res/test.png'),
                                         fit: BoxFit.cover,
                                       ),
                                     )),
@@ -112,7 +112,7 @@ class MapScreenState extends State<ProfilePage>
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
                                       new Text(
-                                        'Parsonal Information',
+                                        'Personal Information',
                                         style: TextStyle(
                                             fontSize: 18.0,
                                             fontWeight: FontWeight.bold),
@@ -177,7 +177,7 @@ class MapScreenState extends State<ProfilePage>
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
                                       new Text(
-                                        'Email ID',
+                                        'username',
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.bold),
@@ -246,7 +246,7 @@ class MapScreenState extends State<ProfilePage>
                                   Expanded(
                                     child: Container(
                                       child: new Text(
-                                        'Pin Code',
+                                        'Birth',
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.bold),
@@ -257,7 +257,7 @@ class MapScreenState extends State<ProfilePage>
                                   Expanded(
                                     child: Container(
                                       child: new Text(
-                                        'State',
+                                        'Location',
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.bold),
@@ -279,7 +279,7 @@ class MapScreenState extends State<ProfilePage>
                                       padding: EdgeInsets.only(right: 10.0),
                                       child: new TextField(
                                         decoration: const InputDecoration(
-                                            hintText: "Enter Pin Code"),
+                                            hintText: "Enter birthday"),
                                         enabled: !_status,
                                       ),
                                     ),
@@ -288,7 +288,7 @@ class MapScreenState extends State<ProfilePage>
                                   Flexible(
                                     child: new TextField(
                                       decoration: const InputDecoration(
-                                          hintText: "Enter State"),
+                                          hintText: "Enter location"),
                                       enabled: !_status,
                                     ),
                                     flex: 2,
