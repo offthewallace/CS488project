@@ -4,19 +4,17 @@ import 'swipe_feed_page.dart';
 import 'dart:async';
 import 'dart:convert';
 
-
 import 'package:http/http.dart' as http;
 
-
-Future<user> createUser(String email,String password) async {
+Future<user> createUser(String email, String password) async {
   final http.Response response = await http.post(
-    'https://jsonplaceholder.typicode.com/albums',
+    'https://78xsb883zk.execute-api.us-east-1.amazonaws.com/default/login',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      'email': email,
-      'password':password,
+      'username': email,
+      'password': password,
     }),
   );
 
@@ -27,8 +25,7 @@ Future<user> createUser(String email,String password) async {
   }
 }
 
-
-class user{
+class user {
   final String username;
   final String bio;
   final String birth;
@@ -39,32 +36,29 @@ class user{
   final String surname;
   final String image;
 
-  user({
-    this.username,
-    this.bio,
-    this.birth,
-    this.city,
-    this.country,
-    this.gender,
-    this.name,
-    this.surname,
-    this.image});
-
+  user(
+      {this.username,
+      this.bio,
+      this.birth,
+      this.city,
+      this.country,
+      this.gender,
+      this.name,
+      this.surname,
+      this.image});
 
   factory user.fromJson(Map<String, dynamic> json) {
     return user(
-      username: json['username'],
-      bio: json['bio'],
-      birth: json['birth'],
-      city: json['city'],
-      country: json['country'],
-      gender:json['gender'],
-      name:json['name'],
-      surname:json['surname'],
-      image:json['image']
-    );
+        username: json['username'],
+        bio: json['bio'],
+        birth: json['birth'],
+        city: json['city'],
+        country: json['country'],
+        gender: json['gender'],
+        name: json['name'],
+        surname: json['surname'],
+        image: json['image']);
   }
-
 }
 
 class MyHomePage extends StatefulWidget {
@@ -87,8 +81,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-  String _password;
-  String _email;
+  final passwordController = TextEditingController();
+  final emailController = TextEditingController();
+  Future<user> _futureUser;
 
   @override
   Widget build(BuildContext context) {
@@ -100,26 +95,24 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
 
     final emailField = TextFormField(
-      onSaved: (value) => _email = value,
+      controller: emailController,
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Email",
           border:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
 
-
     final passwordField = TextFormField(
-      onSaved: (value)=> _password = value,
+      controller: passwordController,
       obscureText: true,
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Password",
           border:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
 
     final loginButton = Material(
@@ -130,52 +123,51 @@ class _MyHomePageState extends State<MyHomePage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-
-          Navigator.push(context, MaterialPageRoute(builder: (context) => SwipeFeedPage()));
+          _futureUser = createUser(emailController.text, passwordController.text);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => SwipeFeedPage()));
         },
         child: Text("Login",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
-
       ),
     );
 
     return Scaffold(
         body: SingleChildScrollView(
-          child: Center(
-            child: Container(
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(36.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 155.0,
-                      child: Image.asset(
-                        "assets/logo.png",
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    SizedBox(height: 45.0),
-                    emailField,
-                    SizedBox(height: 25.0),
-                    passwordField,
-                    SizedBox(
-                      height: 35.0,
-                    ),
-                    loginButton,
-                    SizedBox(
-                      height: 15.0,
-                    ),
-                  ],
+      child: Center(
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(36.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 155.0,
+                  child: Image.asset(
+                    "assets/logo.png",
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
+                SizedBox(height: 45.0),
+                emailField,
+                SizedBox(height: 25.0),
+                passwordField,
+                SizedBox(
+                  height: 35.0,
+                ),
+                loginButton,
+                SizedBox(
+                  height: 15.0,
+                ),
+              ],
             ),
           ),
-        )
-    );
+        ),
+      ),
+    ));
   }
 }
