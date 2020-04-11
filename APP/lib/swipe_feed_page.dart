@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinder_cards/MyHomePage.dart';
 import 'package:tinder_cards/ProfilePage.dart';
 import 'package:tinder_cards/chat.dart';
 import 'cards_section_alignment.dart';
@@ -12,8 +13,12 @@ class SwipeFeedPage extends StatefulWidget {
 class _SwipeFeedPageState extends State<SwipeFeedPage> {
   bool showAlignmentCards = false;
 
+
   @override
   Widget build(BuildContext context) {
+    User userProfile = ModalRoute.of(context).settings.arguments;
+    print(userProfile.username);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,

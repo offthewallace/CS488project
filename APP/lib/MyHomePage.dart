@@ -6,7 +6,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-Future<user> createUser(String email, String password) async {
+Future<User> createUser(String email, String password) async {
   final http.Response response = await http.post(
     'https://78xsb883zk.execute-api.us-east-1.amazonaws.com/default/login',
     headers: <String, String>{
@@ -18,14 +18,15 @@ Future<user> createUser(String email, String password) async {
     }),
   );
 
-  if (response.statusCode == 201) {
-    return user.fromJson(json.decode(response.body));
+  if (response.statusCode == 200) {
+    print(response.body);
+    return User.fromJson(json.decode(response.body));
   } else {
     throw Exception('Wrong password/email');
   }
 }
 
-class user {
+class User {
   final String username;
   final String bio;
   final String birth;
@@ -36,7 +37,7 @@ class user {
   final String surname;
   final String image;
 
-  user(
+  User(
       {this.username,
       this.bio,
       this.birth,
@@ -47,17 +48,24 @@ class user {
       this.surname,
       this.image});
 
-  factory user.fromJson(Map<String, dynamic> json) {
-    return user(
-        username: json['username'],
-        bio: json['bio'],
-        birth: json['birth'],
-        city: json['city'],
-        country: json['country'],
-        gender: json['gender'],
-        name: json['name'],
-        surname: json['surname'],
-        image: json['image']);
+
+  @override
+  String toString() {
+    return 'User{username: $username, bio: $bio, birth: $birth, city: $city, country: $country, gender: $gender, name: $name, surname: $surname, image: $image}';
+  }
+
+  factory User.fromJson(Map<String, dynamic> response) {
+    var user = json.decode(response['user']);
+    return User(
+        username: user['username'],
+        bio: user['bio'],
+        birth: user['birth'],
+        city: user['city'],
+        country: user['country'],
+        gender: user['gender'],
+        name: user['name'],
+        surname: user['surname'],
+        image: user['image']);
   }
 }
 
@@ -83,7 +91,6 @@ class _MyHomePageState extends State<MyHomePage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
-  Future<user> _futureUser;
 
   @override
   Widget build(BuildContext context) {
@@ -123,9 +130,18 @@ class _MyHomePageState extends State<MyHomePage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          _futureUser = createUser(emailController.text, passwordController.text);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => SwipeFeedPage()));
+
+          createUser(emailController.text, passwordController.text)
+            ..then((futureUser) => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SwipeFeedPage(),
+                          settings: RouteSettings(
+                            arguments: futureUser,
+                          )))
+                })
+          ..timeout(Duration(seconds: 5));
         },
         child: Text("Login",
             textAlign: TextAlign.center,
