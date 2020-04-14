@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'MyHomePage.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -19,6 +20,8 @@ class MapScreenState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
+    User userprofile = ModalRoute.of(context).settings.arguments;
+    print(userprofile.username);
     return new Scaffold(
         body: new Container(
           color: Colors.white,
@@ -65,8 +68,8 @@ class MapScreenState extends State<ProfilePage>
                                     decoration: new BoxDecoration(
                                       shape: BoxShape.circle,
                                       image: new DecorationImage(
-                                        image: new ExactAssetImage(
-                                            'res/test.png'),
+                                        image: new NetworkImage(
+                                            userprofile.image),
                                         fit: BoxFit.cover,
                                       ),
                                     )),
@@ -156,8 +159,13 @@ class MapScreenState extends State<ProfilePage>
                                 children: <Widget>[
                                   new Flexible(
                                     child: new TextField(
-                                      decoration: const InputDecoration(
-                                        hintText: "Enter Your Name",
+                                      decoration:  InputDecoration(
+                                        labelText: userprofile.name+" "+userprofile.surname,
+                                        labelStyle: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20.0,
+                                            fontFamily: 'sans-serif-light',
+                                            color: Colors.black)
                                       ),
                                       enabled: !_status,
                                       autofocus: !_status,
@@ -194,8 +202,13 @@ class MapScreenState extends State<ProfilePage>
                                 children: <Widget>[
                                   new Flexible(
                                     child: new TextField(
-                                      decoration: const InputDecoration(
-                                          hintText: "Enter Email ID"),
+                                      decoration:  InputDecoration(
+                                          labelText: userprofile.username,
+                                          labelStyle: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20.0,
+                                              fontFamily: 'sans-serif-light',
+                                              color: Colors.black)),
                                       enabled: !_status,
                                     ),
                                   ),
@@ -212,7 +225,7 @@ class MapScreenState extends State<ProfilePage>
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
                                       new Text(
-                                        'Mobile',
+                                        'Bio',
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.bold),
@@ -229,8 +242,12 @@ class MapScreenState extends State<ProfilePage>
                                 children: <Widget>[
                                   new Flexible(
                                     child: new TextField(
-                                      decoration: const InputDecoration(
-                                          hintText: "Enter Mobile Number"),
+                                      decoration:  InputDecoration(labelText: userprofile.bio,
+                                          labelStyle: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20.0,
+                                              fontFamily: 'sans-serif-light',
+                                              color: Colors.black)),
                                       enabled: !_status,
                                     ),
                                   ),
@@ -246,7 +263,7 @@ class MapScreenState extends State<ProfilePage>
                                   Expanded(
                                     child: Container(
                                       child: new Text(
-                                        'Birth',
+                                        'Age',
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.bold),
@@ -278,8 +295,12 @@ class MapScreenState extends State<ProfilePage>
                                     child: Padding(
                                       padding: EdgeInsets.only(right: 10.0),
                                       child: new TextField(
-                                        decoration: const InputDecoration(
-                                            hintText: "Enter birthday"),
+                                        decoration:  InputDecoration(labelText: userprofile.birth,
+                                            labelStyle: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20.0,
+                                                fontFamily: 'sans-serif-light',
+                                                color: Colors.black)),
                                         enabled: !_status,
                                       ),
                                     ),
@@ -287,8 +308,12 @@ class MapScreenState extends State<ProfilePage>
                                   ),
                                   Flexible(
                                     child: new TextField(
-                                      decoration: const InputDecoration(
-                                          hintText: "Enter location"),
+                                      decoration:  InputDecoration(labelText: userprofile.city+" "+userprofile.country,
+                                          labelStyle: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20.0,
+                                              fontFamily: 'sans-serif-light',
+                                              color: Colors.black)),
                                       enabled: !_status,
                                     ),
                                     flex: 2,

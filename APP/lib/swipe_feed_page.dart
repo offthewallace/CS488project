@@ -16,8 +16,8 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    User userProfile = ModalRoute.of(context).settings.arguments;
-    print(userProfile.username);
+    User userprofile = ModalRoute.of(context).settings.arguments;
+    print(userprofile.username);
 
     return Scaffold(
       appBar: AppBar(
@@ -27,7 +27,11 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
         leading: IconButton(
             onPressed: () {
 
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(),
+                  settings: RouteSettings(
+                    arguments: userprofile,
+                  )
+              ));
 
             }, icon: Icon(Icons.settings, color: Colors.grey)),
         title: Switch(
