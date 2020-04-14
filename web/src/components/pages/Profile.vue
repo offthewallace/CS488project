@@ -154,11 +154,13 @@
 </template>
 
 <script>
+
     import {AXIOS} from '../resources/http.config'
     import Countries from '../resources/countries.json'
     import Hobbies from '../resources/hobbies.json'
     import Header from '../navigation/Header.vue'
     import axios from 'axios'
+    import AWS from 'aws-sdk'
 
     export default {
         name: "Profile",
@@ -393,7 +395,52 @@
             
             onUpload() {
 
-               //this.firstImg =  this.file;
+
+                //const fs = require('fs');
+                //const AWS = require('aws-sdk');
+
+                const BUCKET_NAME = 'elasticbeanstalk-us-east-1-861432961105';
+                const ID = 'AKIA4RELH3BIXZZX6OOG';
+                const SECRET = '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';
+                const bucketRegion = 'us-east-1';
+                const IdentityPoolId = 'us-east-1:5b8e7050-a8f5-49f8-b411-0d1b807e9edf';
+
+                const files = document.getElementById('file').files;
+                const up = files[0];
+
+                AWS.config.update({
+                    region: bucketRegion,
+                    credentials: new AWS.CognitoIdentityCredentials({
+                        IdentityPoolId: IdentityPoolId
+                    })
+                });
+
+                const s3 = new AWS.S3({
+                    apiVersion: '2006-03-01',
+                    params: {Bucket: BUCKET_NAME}
+                });
+
+                /*const s3 = new AWS.S3({
+                    accessKeyId: ID,
+                    secretAccessKey: SECRET
+                });*/
+
+                //const fileContent = fs.readFileSync(this.file);
+
+                const params = {
+                    Bucket: BUCKET_NAME,
+                    Key: this.file.name, // File name you want to save as in S3
+                    Body: up
+                };
+
+                s3.upload(params, function(err, data) {
+                    if (err) {
+                        throw err;
+                    }
+                    console.log(`File uploaded successfully. ${data.Location}`);
+                });
+
+                //this.firstImg =  this.file;
                const fd = new FormData();
                fd.append('image', this.file, this.file.name);
                axios.post('', fd)

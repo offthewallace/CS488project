@@ -86,7 +86,7 @@
                                             </div>
                                             <span class="span">{{m.datesend}}</span>
                                         </div>
-                                        <!--<div v-if="m.myPhoto" class="col-md-2 col-sm-2">
+                                        <div v-if="m.myPhoto" class="col-md-2 col-sm-2">
                                             <img v-bind:src=" user.image"
                                                  class="chatimg rounded-circle">
                                         </div>
@@ -96,7 +96,7 @@
                                         <div class="col-md-2 col-xs-2" v-if="m.friendPhoto">
                                             <img v-bind:src="friend.image"
                                                  class="chatimg rounded-circle">
-                                        </div>-->
+                                        </div>
                                     </div>
                                     <div class="col-md-6 col-xs-6"></div>
                                 </div>
