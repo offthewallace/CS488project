@@ -2,6 +2,27 @@ import 'package:flutter/material.dart';
 import 'profile_card_alignment.dart';
 import 'dart:math';
 
+/*
+Future<User> createUser(String email, String password) async {
+  final http.Response response = await http.post(
+    'https://78xsb883zk.execute-api.us-east-1.amazonaws.com/default/login',
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'username': email,
+      'password': password,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    print(response.body);
+    return User.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Wrong password/email');
+  }
+}
+*/
 List<Alignment> cardsAlign = [
   Alignment(0.0, 1.0),
   Alignment(0.0, 0.8),
@@ -10,6 +31,9 @@ List<Alignment> cardsAlign = [
 List<Size> cardsSize = List(3);
 
 class CardsSectionAlignment extends StatefulWidget {
+  Alignment frontCardAlign;
+  _CardsSectionState state;
+
   CardsSectionAlignment(BuildContext context) {
     cardsSize[0] = Size(MediaQuery.of(context).size.width * 0.9,
         MediaQuery.of(context).size.height * 0.6);
@@ -20,7 +44,7 @@ class CardsSectionAlignment extends StatefulWidget {
   }
 
   @override
-  _CardsSectionState createState() => _CardsSectionState();
+  _CardsSectionState createState() => state = _CardsSectionState();
 }
 
 class _CardsSectionState extends State<CardsSectionAlignment>
@@ -28,6 +52,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
   int cardsCounter = 0;
 
   List<ProfileCardAlignment> cards = List();
+  //TODO: how to use this and how to trigger
   AnimationController _controller;
 
   final Alignment defaultFrontCardAlign = Alignment(0.0, 0.0);
@@ -66,6 +91,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
         // Prevent swiping if the cards are animating
         _controller.status != AnimationStatus.forward
             ? SizedBox.expand(
+          //TODO: find the gestor: go left or right
                 child: GestureDetector(
                 // While dragging the first card
                 onPanUpdate: (DragUpdateDetails details) {
@@ -88,9 +114,14 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                 // When releasing the first card
                 onPanEnd: (_) {
                   // If the front card was swiped far enough to count as swiped
-                  if (frontCardAlign.x > 3.0 || frontCardAlign.x < -3.0) {
+                  if (frontCardAlign.x > 3.0 ) {
+                    print("Right");
                     animateCards();
-                  } else {
+                  }else if (frontCardAlign.x < -3.0){
+                   print('Left');
+                   animateCards();
+                  }
+                  else {
                     // Return to the initial rotation and alignment
                     setState(() {
                       frontCardAlign = defaultFrontCardAlign;
@@ -144,6 +175,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
   }
 
   void changeCardsOrder() {
+    //TODO: add the user information inside of the temp
     setState(() {
       // Swap cards (back card becomes the middle card; middle card becomes the front card, front card becomes a  bottom card)
       var temp = cards[0];

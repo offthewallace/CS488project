@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,6 +11,30 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tinder_cards/MyHomePage.dart';
+import 'dart:convert';
+
+
+
+Future<User> createUser(String email, String password) async {
+  final http.Response response = await http.post(
+    'https://78xsb883zk.execute-api.us-east-1.amazonaws.com/default/login',
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'username': email,
+      'password': password,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    print(response.body);
+    return User.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Wrong password/email');
+  }
+}
 
 class Chat extends StatelessWidget {
   final String peerId;
@@ -20,6 +44,7 @@ class Chat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(peerId);
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(
@@ -90,6 +115,7 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   readLocal() async {
+    /*
     prefs = await SharedPreferences.getInstance();
     id = prefs.getString('id') ?? '';
     if (id.hashCode <= peerId.hashCode) {
@@ -100,7 +126,7 @@ class ChatScreenState extends State<ChatScreen> {
 
     Firestore.instance.collection('users').document(id).updateData({'chattingWith': peerId});
 
-    setState(() {});
+    setState(() {});*/
   }
 
   Future getImage() async {
@@ -389,7 +415,7 @@ class ChatScreenState extends State<ChatScreen> {
         isShowSticker = false;
       });
     } else {
-      Firestore.instance.collection('users').document(id).updateData({'chattingWith': null});
+      //Firestore.instance.collection('users').document(id).updateData({'chattingWith': null});
       Navigator.pop(context);
     }
 
@@ -613,14 +639,8 @@ class ChatScreenState extends State<ChatScreen> {
     return Flexible(
       child: groupChatId == ''
           ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(themeColor)))
-          : StreamBuilder(
-        stream: Firestore.instance
-            .collection('messages')
-            .document(groupChatId)
-            .collection(groupChatId)
-            .orderBy('timestamp', descending: true)
-            .limit(20)
-            .snapshots(),
+          : FutureBuilder(
+        future: createUser("123","456"),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(

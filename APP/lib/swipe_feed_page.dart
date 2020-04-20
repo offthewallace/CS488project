@@ -4,6 +4,9 @@ import 'package:tinder_cards/ProfilePage.dart';
 import 'package:tinder_cards/chat.dart';
 import 'cards_section_alignment.dart';
 import 'cards_section_draggable.dart';
+import 'test.dart';
+import 'package:flutter_tindercard/flutter_tindercard.dart';
+import 'friendList.dart';
 
 class SwipeFeedPage extends StatefulWidget {
   @override
@@ -12,13 +15,14 @@ class SwipeFeedPage extends StatefulWidget {
 
 class _SwipeFeedPageState extends State<SwipeFeedPage> {
   bool showAlignmentCards = false;
-
+  CardsSectionAlignment tempcard;
 
   @override
   Widget build(BuildContext context) {
     User userprofile = ModalRoute.of(context).settings.arguments;
     print(userprofile.username);
 
+    final cards = CardsSectionAlignment(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -26,14 +30,15 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
         backgroundColor: Colors.white,
         leading: IconButton(
             onPressed: () {
-
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(),
-                  settings: RouteSettings(
-                    arguments: userprofile,
-                  )
-              ));
-
-            }, icon: Icon(Icons.settings, color: Colors.grey)),
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProfilePage(),
+                      settings: RouteSettings(
+                        arguments: userprofile,
+                      )));
+            },
+            icon: Icon(Icons.settings, color: Colors.grey)),
         title: Switch(
           onChanged: (bool value) => setState(() => showAlignmentCards = value),
           value: showAlignmentCards,
@@ -42,26 +47,25 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
         actions: <Widget>[
           IconButton(
               onPressed: () {
-
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Chat()));
-
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FriendsListPage(),
+                        settings: RouteSettings(
+                          arguments: userprofile,
+                        )));
               },
               icon: Icon(Icons.question_answer, color: Colors.grey)),
         ],
       ),
       backgroundColor: Colors.white,
       body: Column(
-        children: <Widget>[
-          showAlignmentCards
-              ? CardsSectionAlignment(context)
-              : CardsSectionDraggable(),
-          buttonsRow()
-        ],
+        children: <Widget>[tempcard = cards, buttonsRow(cards)],
       ),
     );
   }
 
-  Widget buttonsRow() {
+  Widget buttonsRow(CardsSectionAlignment cards) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 48.0),
       child: Row(
@@ -78,6 +82,7 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
           Padding(padding: EdgeInsets.only(right: 8.0)),
           FloatingActionButton(
             heroTag: 'exit',
+            //TODO: set up the like or dislike or may be how to trigger with the
             onPressed: () {},
             backgroundColor: Colors.white,
             child: Icon(Icons.close, color: Colors.red),
@@ -85,7 +90,12 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
           Padding(padding: EdgeInsets.only(right: 8.0)),
           FloatingActionButton(
             heroTag: 'like',
-            onPressed: () {},
+            onPressed: () {
+              if (cards.state != null) {
+                print(cards.state.frontCardAlign.x);
+                cards.state.animateCards();
+              }
+            },
             backgroundColor: Colors.white,
             child: Icon(Icons.favorite, color: Colors.green),
           ),
