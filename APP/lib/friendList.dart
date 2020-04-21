@@ -52,6 +52,7 @@ class _FriendsListPageState extends State<FriendsListPage> {
             builder: (context) => Chat(
               peerId: friend.name,
               peerAvatar: friend.avatar,
+              ID:'123@456.com',
             )));
   }
 

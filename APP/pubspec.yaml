@@ -2,6 +2,7 @@ name: tinder_cards
 description: A new Flutter project.
 
 dependencies:
+  flame: ^0.19.1
   http: ^0.12.0+4
   cupertino_icons: ^0.1.2
   firebase_auth: ^0.14.0+5
@@ -43,8 +44,25 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - res/test.jpeg
-   - assets/
+    - assets/images/crate.png
+    - assets/images/bullet.png
+    - assets/images/explosion-0.png
+    - assets/images/explosion-1.png
+    - assets/images/explosion-2.png
+    - assets/images/explosion-3.png
+    - assets/images/explosion-4.png
+    - assets/images/explosion-5.png
+    - assets/images/explosion-6.png
+    - assets/audio/explosion.mp3
+    - assets/audio/miss.mp3
+    - assets/audio/music.ogg
+    - assets/images/gun.png
+    - assets/images/dragon.png
+    - assets/images/fire.png
+    - assets/images/background.jpg
+    - res/test.jpeg
+    - assets/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

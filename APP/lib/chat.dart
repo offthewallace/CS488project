@@ -14,23 +14,35 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tinder_cards/MyHomePage.dart';
 import 'dart:convert';
 
+class Message {
+  final String fromID;
+  final String toID;
+  final String message;
+  final int types=0;
+  final String date;
+  Message({this.fromID, this.toID,this.message,this.date});
+  Message.fromJson(Map<String, dynamic> data)
+      : fromID = data['fromID'],
+        toID = data['toID'],
+        message=data['message'],
+        date=data['datesend'];
+}
 
 
-Future<User> createUser(String email, String password) async {
-  final http.Response response = await http.post(
-    'https://78xsb883zk.execute-api.us-east-1.amazonaws.com/default/login',
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'username': email,
-      'password': password,
-    }),
-  );
+Future<List> getMessage(String toid, String fromid) async {
+
+  final http.Response response = await http.get(
+    'https://78xsb883zk.execute-api.us-east-1.amazonaws.com/default/message/?fromid=' + fromid
+  + '&toid=' + toid);
 
   if (response.statusCode == 200) {
-    print(response.body);
-    return User.fromJson(json.decode(response.body));
+    List myList =json.decode(response.body) as List;
+    print(myList.length);
+    for(var i=0;i< myList.length;i++){
+      myList[i]=Message.fromJson(myList[i]);
+    }
+    print(myList[0].date);
+    return myList;
   } else {
     throw Exception('Wrong password/email');
   }
@@ -39,8 +51,9 @@ Future<User> createUser(String email, String password) async {
 class Chat extends StatelessWidget {
   final String peerId;
   final String peerAvatar;
+  final String ID;
 
-  Chat({Key key, @required this.peerId, @required this.peerAvatar}) : super(key: key);
+  Chat({Key key, @required this.peerId, @required this.peerAvatar,@required this.ID}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +69,7 @@ class Chat extends StatelessWidget {
       body: new ChatScreen(
         peerId: peerId,
         peerAvatar: peerAvatar,
+        ID:ID,
       ),
     );
   }
@@ -64,19 +78,20 @@ class Chat extends StatelessWidget {
 class ChatScreen extends StatefulWidget {
   final String peerId;
   final String peerAvatar;
+  final String ID;
 
-  ChatScreen({Key key, @required this.peerId, @required this.peerAvatar}) : super(key: key);
+  ChatScreen({Key key, @required this.peerId, @required this.peerAvatar,@required this.ID}) : super(key: key);
 
   @override
-  State createState() => new ChatScreenState(peerId: peerId, peerAvatar: peerAvatar);
+  State createState() => new ChatScreenState(peerId: peerId, peerAvatar: peerAvatar,ID:ID);
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  ChatScreenState({Key key, @required this.peerId, @required this.peerAvatar});
+  ChatScreenState({Key key, @required this.peerId, @required this.peerAvatar, @required this.ID});
 
   String peerId;
   String peerAvatar;
-  String id;
+  String ID;
 
   var listMessage;
   String groupChatId;
@@ -95,14 +110,14 @@ class ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     focusNode.addListener(onFocusChange);
-
+    //id='123@456.com';
     groupChatId = '';
 
     isLoading = false;
     isShowSticker = false;
     imageUrl = '';
 
-    readLocal();
+    //readLocal();
   }
 
   void onFocusChange() {
@@ -115,9 +130,11 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   readLocal() async {
+
+
+    //prefs = await SharedPreferences.getInstance();
+    //id = prefs.getString('id') ?? '';
     /*
-    prefs = await SharedPreferences.getInstance();
-    id = prefs.getString('id') ?? '';
     if (id.hashCode <= peerId.hashCode) {
       groupChatId = '$id-$peerId';
     } else {
@@ -125,8 +142,8 @@ class ChatScreenState extends State<ChatScreen> {
     }
 
     Firestore.instance.collection('users').document(id).updateData({'chattingWith': peerId});
-
-    setState(() {});*/
+    */
+    setState(() {});
   }
 
   Future getImage() async {
@@ -182,7 +199,7 @@ class ChatScreenState extends State<ChatScreen> {
         await transaction.set(
           documentReference,
           {
-            'idFrom': id,
+            'idFrom': ID,
             'idTo': peerId,
             'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
             'content': content,
@@ -196,16 +213,18 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  Widget buildItem(int index, DocumentSnapshot document) {
-    if (document['idFrom'] == id) {
+  Widget buildItem(int index, Message document) {
+    print(document.fromID);
+    print(peerId);
+    if (document.fromID == '123@456.com') {
       // Right (my message)
       return Row(
         children: <Widget>[
-          document['type'] == 0
+          document.types == 0
           // Text
               ? Container(
             child: Text(
-              document['content'],
+              document.message,
               style: TextStyle(color: primaryColor),
             ),
             padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
@@ -213,7 +232,7 @@ class ChatScreenState extends State<ChatScreen> {
             decoration: BoxDecoration(color: greyColor2, borderRadius: BorderRadius.circular(8.0)),
             margin: EdgeInsets.only(bottom: isLastMessageRight(index) ? 20.0 : 10.0, right: 10.0),
           )
-              : document['type'] == 1
+              : document.types== 1
           // Image
               ? Container(
             child: FlatButton(
@@ -245,7 +264,7 @@ class ChatScreenState extends State<ChatScreen> {
                     ),
                     clipBehavior: Clip.hardEdge,
                   ),
-                  imageUrl: document['content'],
+                  imageUrl: document.message,
                   width: 200.0,
                   height: 200.0,
                   fit: BoxFit.cover,
@@ -255,7 +274,7 @@ class ChatScreenState extends State<ChatScreen> {
               ),
               onPressed: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => FullPhoto(url: document['content'])));
+                    context, MaterialPageRoute(builder: (context) => FullPhoto(url: document.message)));
               },
               padding: EdgeInsets.all(0),
             ),
@@ -264,7 +283,7 @@ class ChatScreenState extends State<ChatScreen> {
           // Sticker
               : Container(
             child: new Image.asset(
-              'images/${document['content']}.gif',
+              'images/${document.message}.gif',
               width: 100.0,
               height: 100.0,
               fit: BoxFit.cover,
@@ -304,10 +323,10 @@ class ChatScreenState extends State<ChatScreen> {
                   clipBehavior: Clip.hardEdge,
                 )
                     : Container(width: 35.0),
-                document['type'] == 0
+                document.types == 0
                     ? Container(
                   child: Text(
-                    document['content'],
+                    document.message,
                     style: TextStyle(color: Colors.white),
                   ),
                   padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
@@ -315,7 +334,7 @@ class ChatScreenState extends State<ChatScreen> {
                   decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(8.0)),
                   margin: EdgeInsets.only(left: 10.0),
                 )
-                    : document['type'] == 1
+                    : document.types == 1
                     ? Container(
                   child: FlatButton(
                     child: Material(
@@ -346,7 +365,7 @@ class ChatScreenState extends State<ChatScreen> {
                           ),
                           clipBehavior: Clip.hardEdge,
                         ),
-                        imageUrl: document['content'],
+                        imageUrl: document.message,
                         width: 200.0,
                         height: 200.0,
                         fit: BoxFit.cover,
@@ -356,7 +375,7 @@ class ChatScreenState extends State<ChatScreen> {
                     ),
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => FullPhoto(url: document['content'])));
+                          MaterialPageRoute(builder: (context) => FullPhoto(url: document.message)));
                     },
                     padding: EdgeInsets.all(0),
                   ),
@@ -364,7 +383,7 @@ class ChatScreenState extends State<ChatScreen> {
                 )
                     : Container(
                   child: new Image.asset(
-                    'images/${document['content']}.gif',
+                    'images/${document.message}.gif',
                     width: 100.0,
                     height: 100.0,
                     fit: BoxFit.cover,
@@ -378,8 +397,7 @@ class ChatScreenState extends State<ChatScreen> {
             isLastMessageLeft(index)
                 ? Container(
               child: Text(
-                DateFormat('dd MMM kk:mm')
-                    .format(DateTime.fromMillisecondsSinceEpoch(int.parse(document['timestamp']))),
+                document.date,
                 style: TextStyle(color: greyColor, fontSize: 12.0, fontStyle: FontStyle.italic),
               ),
               margin: EdgeInsets.only(left: 50.0, top: 5.0, bottom: 5.0),
@@ -394,7 +412,7 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   bool isLastMessageLeft(int index) {
-    if ((index > 0 && listMessage != null && listMessage[index - 1]['idFrom'] == id) || index == 0) {
+    if ((index > 0 && listMessage != null && listMessage[index - 1].fromID == ID) || index == 0) {
       return true;
     } else {
       return false;
@@ -402,7 +420,7 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   bool isLastMessageRight(int index) {
-    if ((index > 0 && listMessage != null && listMessage[index - 1]['idFrom'] != id) || index == 0) {
+    if ((index > 0 && listMessage != null && listMessage[index - 1].fromID != ID) || index == 0) {
       return true;
     } else {
       return false;
@@ -637,20 +655,22 @@ class ChatScreenState extends State<ChatScreen> {
 
   Widget buildListMessage() {
     return Flexible(
-      child: groupChatId == ''
-          ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(themeColor)))
-          : FutureBuilder(
-        future: createUser("123","456"),
+      child: //groupChatId == ''
+          //? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(themeColor)))
+           FutureBuilder(
+        future: getMessage("abc@def.com","123@456.com"),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
+            print(snapshot.data[1].runtimeType);
             return Center(
                 child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(themeColor)));
           } else {
-            listMessage = snapshot.data.documents;
+            listMessage = snapshot.data;
+
             return ListView.builder(
               padding: EdgeInsets.all(10.0),
-              itemBuilder: (context, index) => buildItem(index, snapshot.data.documents[index]),
-              itemCount: snapshot.data.documents.length,
+              itemBuilder: (context, index) => buildItem(index, snapshot.data[index]),
+              itemCount: snapshot.data.length,
               reverse: true,
               controller: listScrollController,
             );
