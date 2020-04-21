@@ -22,7 +22,7 @@
                                 <!-- The slideshow -->
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img class="profileImage" v-bind:src=" firstImg" width="100">
+                                        <img class="profileImage" v-bind:src="firstImg" width="100">
                                     </div>
                                     <div class="carousel-item" v-for="img in otherImg">
                                         <img class="profileImage" v-bind:src="'data:image/jpeg;base64,'+ img" width="100">
@@ -300,7 +300,7 @@
                         //console.log(this.user);
                         //console.log(this.user["city"]);
                         this.firstImg = this.user['image'];
-                        /* I am lazy to support muli image 
+                        /* I am lazy to support muli image
                         this.otherImg = [];
                         for (let i=1; i<this.user.image.length; i++){
                             this.otherImg.push(this.user.image[i].name);
@@ -395,18 +395,9 @@
             
             onUpload() {
 
-
-                //const fs = require('fs');
-                //const AWS = require('aws-sdk');
-
                 const BUCKET_NAME = 'elasticbeanstalk-us-east-1-861432961105';
-                const ID = 'AKIA4RELH3BIXZZX6OOG';
-                const SECRET = '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';
                 const bucketRegion = 'us-east-1';
                 const IdentityPoolId = 'us-east-1:5b8e7050-a8f5-49f8-b411-0d1b807e9edf';
-
-                const files = document.getElementById('file').files;
-                const up = files[0];
 
                 AWS.config.update({
                     region: bucketRegion,
@@ -420,33 +411,27 @@
                     params: {Bucket: BUCKET_NAME}
                 });
 
-                /*const s3 = new AWS.S3({
-                    accessKeyId: ID,
-                    secretAccessKey: SECRET
-                });*/
-
-                //const fileContent = fs.readFileSync(this.file);
-
                 const params = {
                     Bucket: BUCKET_NAME,
                     Key: this.file.name, // File name you want to save as in S3
-                    Body: up
+                    Body: this.file
                 };
+
+                const flname = this.file.name;
+                const self = this;
 
                 s3.upload(params, function(err, data) {
                     if (err) {
                         throw err;
                     }
                     console.log(`File uploaded successfully. ${data.Location}`);
+                    console.log(self.file.name);
+                    self.user.image = 'https://elasticbeanstalk-us-east-1-861432961105.s3.amazonaws.com/' + flname;
+                    console.log(self.user);
+                    self.saveInfo();
+                    console.log(`File changed successfully. ${data.Location}`);
                 });
 
-                //this.firstImg =  this.file;
-               const fd = new FormData();
-               fd.append('image', this.file, this.file.name);
-               axios.post('', fd)
-                .then(res => {
-                    console.log(res)
-                });
 
                var serverID="http://"+this.firstImg.split("/")[2];
                console.log(serverID);
