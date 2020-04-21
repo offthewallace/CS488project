@@ -11,7 +11,7 @@
         </div>
         <span v-if="errorLogIn" class="text-danger small-text">Check your email and password</span>
         <div class="w-100"></div>
-        <button class="btn" v-on:click="enter">Enter</button>
+        <button class="btn" v-on:click.prevent="enter">Enter</button>
     </form>
 </template>
 

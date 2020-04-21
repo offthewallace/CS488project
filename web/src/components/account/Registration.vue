@@ -64,7 +64,7 @@
         </div>
         <span class="text-danger small-text"></span>
         <div class="w-100"></div>
-        <button class="btn btn-styles" v-on:click="register + addUser">
+        <button class="btn btn-styles" v-on:click.prevent="addUser">
             Register
         </button>
     </form>
@@ -72,7 +72,7 @@
 
 <script>
     import Countries from '../resources/countries.json'
-    import axios from "axios";
+    import {AXIOS} from '../resources/http.config'
 
     export default {
         name: "Registration",
@@ -97,6 +97,7 @@
                     city: "",
                     country: "",
                     birth: "",
+                    image: "",
                 },
                 userLogIn: {
                     username: "",
@@ -110,14 +111,19 @@
         methods: {
             addUser: async function () {
                 try {
-                    const params = {
-                        "email": "email",
-                        "password": "password"
-                }
-                    await axios.post("https://306y2aghzl.execute-api.us-east-1.amazonaws.com/usr/users/{email}", params);
+
+                    console.log('trying to Register');
+                    this.userRegister.image = 'https://elasticbeanstalk-us-east-1-861432961105.s3.amazonaws.com/nopic_pic.jpg';
+                    let sendData = JSON.stringify(this.userRegister);
+                    console.log(sendData);
+                    AXIOS.post('/Registration', sendData)
+                        .then(console.log(this.userRegister));
+                    console.log('Registered!');
+
+                    this.register();
 
                 } catch (err) {
-                    console.log('error: $(err)');
+                    console.log('error on addUser');
                 }
             },
 
@@ -131,6 +137,7 @@
                 if (!Countries[country].includes(city)) this.userRegister.city = "";
             },
             register: function () {
+                console.log('Register func');
                 this.$store.dispatch('register', this.userRegister)
                     .then(() => {
                         this.userLogIn.username = this.userRegister.email;
@@ -138,6 +145,7 @@
                         this.enter();
 
                     }).catch(error => {
+                        console.log('error on register');
                         /*
                         this.loaded = true;
                         //this.error = error.response.data;
@@ -162,6 +170,7 @@
                         this.$router.push('Profile');
                     })
                     .catch(error => {
+                        console.log('error on enter');
                     });
             },
         }

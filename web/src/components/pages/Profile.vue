@@ -159,7 +159,6 @@
     import Countries from '../resources/countries.json'
     import Hobbies from '../resources/hobbies.json'
     import Header from '../navigation/Header.vue'
-    import axios from 'axios'
     import AWS from 'aws-sdk'
 
     export default {
