@@ -8,7 +8,8 @@ export default new Vuex.Store({
     state: {
         status: '',
         token: localStorage.getItem('token') || '',
-        user : {}
+        user : {},
+        credentials: {}
     },
     mutations: {
         auth_request(state){
@@ -33,7 +34,7 @@ export default new Vuex.Store({
                 commit('auth_request');
                 let data = {username: authUser.username,
                 password: authUser.password};
-                console.log(authUser.username)
+                console.log(authUser.username);
                 let headers = {
                     'Content-type': 'application/x-www-form-urlencoded'
                 };
@@ -48,6 +49,9 @@ export default new Vuex.Store({
                         
                         const user  = response.data.user;
                         console.log(user);
+                        if (user === undefined) {
+                            throw new Error();
+                        }
                         localStorage.setItem('token', token);
                         localStorage.setItem('user',user);
                         localStorage.setItem('key',authUser.username);

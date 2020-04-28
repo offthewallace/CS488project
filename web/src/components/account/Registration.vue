@@ -62,7 +62,7 @@
                 <input type="password" v-model="userRegister.password2" placeholder="Reenter password">
             </div>
         </div>
-        <span class="text-danger small-text"></span>
+        <span v-if="errorReg" class="text-danger small-text">Please enter missing fields</span>
         <div class="w-100"></div>
         <button class="btn btn-styles" v-on:click.prevent="addUser">
             Register
@@ -83,6 +83,7 @@
         },
         data() {
             return {
+                errorReg: false,
                 loaded: false,
                 error: [],
                 errors: {},
@@ -167,10 +168,12 @@
             enter: function() {
                 this.$store.dispatch('login', this.userLogIn)
                     .then(() => {
+                        localStorage.setItem('credentials', JSON.stringify(this.userLogIn));
                         this.$router.push('Profile');
                     })
                     .catch(error => {
                         console.log('error on enter');
+                        this.errorReg = true;
                     });
             },
         }

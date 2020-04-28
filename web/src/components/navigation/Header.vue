@@ -15,9 +15,9 @@
                 <li class="nav-item">
                     <router-link class="nav-link" to="/chat" style="color: white">CHATS</router-link>
                 </li>
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <router-link class="nav-link" to="/stats" style="color: white">STATS</router-link>
-                </li>
+                </li>-->
                 <li>
                     <a>
                         <font-awesome-icon icon="sign-out-alt" style="margin-top: 1.7vh; margin-left: 2ch" v-on:click="logOut()"/>

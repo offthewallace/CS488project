@@ -20,7 +20,7 @@
         name: "Login",
         data() {
             return {
-                errorLogIn: true,
+                errorLogIn: false,
                 user: {},
                 userLogIn: {
                     username: "",
@@ -30,9 +30,9 @@
         },
         methods: {
             enter: function() {
-                this.errorLogIn = false;
                 this.$store.dispatch('login', this.userLogIn)
                     .then(() => {
+                        localStorage.setItem('credentials', JSON.stringify(this.userLogIn));
                         this.$router.push('Profile');
                     })
                     .catch(error => {

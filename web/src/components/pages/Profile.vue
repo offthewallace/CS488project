@@ -199,8 +199,17 @@
             if (localStorage.getItem('token')) {
                 //AXIOS.defaults.headers.common['Authorization'] = localStorage.getItem('token');
                 //this.user=localStorage.getItem('user')
-                
-                this.getUser();
+                if(this.isEmpty(this.user)) {
+                    // Object is empty (Would return true in this example)
+                    console.log('Empty');
+                    console.log(typeof localStorage.getItem('user'));
+                    this.getUser();
+                } else {
+                    // Object is NOT empty
+                    console.log('Not Empty');
+                    this.getUser2();
+                }
+                //this.getUser();
                 //console.log(this.user);
             }
             this.collectHobbies()
@@ -264,6 +273,14 @@
                     //localStorage.setItem('user',this.user);
                     console.log("test on what data to send ");
                     console.log(sendData);
+                    /*console.log(typeof this.user.Hobby);
+                    console.log(this.hobbies);
+                    console.log(JSON.stringify(this.user.Hobby));
+                    delete this.user.like;*/
+                    delete this.user.password;
+                    delete this.user.password2;
+
+                    //this.user.Hobby = JSON.parse(JSON.stringify(this.user.Hobby));
                     AXIOS.put('/users', sendData)
                         .then(this.setEditUser2).then(console.log(this.user))
                             /*
@@ -287,10 +304,19 @@
                             this.errorMode = true;
                         })*/;
                 }
+                //this.getUser2();
+                //localStorage.setItem('user',this.user);
             },
             getUser: function () {
 
-                        this.user=JSON.parse(localStorage.getItem('user'));
+                        try {
+                            this.user=JSON.parse(localStorage.getItem('user'));
+                        } catch (e) {
+                            console.log('bounce');
+                            this.getUser2();
+                            return;
+                        }
+                        //this.user=JSON.parse(localStorage.getItem('user'));
                         //localStorage.removeItem('user');
                         //this.user = response.data;
                         this.setEditUser();
@@ -345,7 +371,7 @@
                 }
             },
             setEditUser2:function(){
-                localStorage.removeItem('user');
+                //localStorage.removeItem('user');
                 for (let i in this.user) {
                     this.user[i] = this.user[i]
                 }
@@ -365,7 +391,7 @@
                 localStorage.setItem('user',this.user);
                 this.setLoaded();
                 this.editMode = false;
-                localStorage.setItem('user',user)
+                localStorage.setItem('user',this.user)
 
             },
             setLoaded: function() {
@@ -481,6 +507,39 @@
                 this.errorSurname = null;
                 this.photoError = null;
                 this.hobbyError = null
+            },
+            getUser2: function () {
+
+                let logon=JSON.parse(localStorage.getItem('credentials'));
+                console.log(logon);
+                this.$store.dispatch('login', logon)
+                    .then(() => {
+                        this.user=JSON.parse(localStorage.getItem('user'));
+                        this.firstImg = this.user['image'];
+                    });
+
+                console.log('success');
+                console.log(this.user);
+                console.log(localStorage.getItem('user'));
+
+
+                this.setEditUser();
+
+                this.username = this.user.name;
+                this.hobbies = [];
+                for (let el in this.user.hobby) {
+                    this.hobbies.push(this.user.hobby[el])
+                }
+                this.userHobbies = this.hobbies;
+                this.setLoaded();
+                this.editMode = false;
+            },
+            isEmpty: function (obj) {
+                for(var key in obj) {
+                    if(obj.hasOwnProperty(key))
+                        return false;
+                }
+                return true;
             }
         }
     }
