@@ -48,9 +48,9 @@
                     <div class="row">
                         <!--<a v-on:click="goBack()"> <- CLOSE CHAT</a>-->
                         <button @click="goBack" type="button" class="button2"> &nbsp; <- CLOSE CHAT</button>
-                        <div class="wrapper">
+                        <!--<div class="wrapper">
                             <button @click="ChatBot" type="button" class="button1">CHAT BOT</button>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="row">
 
@@ -178,7 +178,8 @@
                 messageView: {
                     fromUserId: {},
                     toUserId: {},
-                    message: ''
+                    message: '',
+                    type: '0'
                 },
                 user: {},
                 friend: {}
@@ -343,7 +344,7 @@
     }
 
     .button1 {
-        background-color: #751b26;
+        background-color: rgba(8,134,229,0.96);
         border: 1px solid white;
         color: white;
         margin-top: 2vh;
@@ -352,13 +353,13 @@
     }
 
     .button2 {
-        background-color: #751b26;
+        background-color: rgba(8,134,229,0.96);
         border: 1px solid white;
         color: white;
         margin-top: 2vh;
         text-align: left;
         float: right;
-        width: 78.072%;
+        width: 100%;
     }
 
     .base {
@@ -395,17 +396,18 @@
     }
 
     .colStyle2 {
-        background: rgba(30, 220, 87, 0.75);
+        background: rgba(134, 133, 133, 0.21);
         border-radius: 5px;
     }
 
     .colStyle3 {
-        background: #b3ecff;
+        background: rgba(10, 32, 67, 0.96);
         border-radius: 5px;
+        color: white;
     }
 
     .fa-2x {
-        color: #751b26;
+        color: rgba(8,134,229,0.96);
         float: right;
     }
 

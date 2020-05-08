@@ -1,10 +1,10 @@
 <template>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #751b26; color: white; ">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: rgba(8,134,229,0.96); color: white; ">
         <a class="navbar-brand" href="#" style="font-size: x-large">DatingHub</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar" style="background-color: rgba(156,36,50,0.8)">
+        <div class="collapse navbar-collapse" id="collapsibleNavbar" style="background-color: rgba(59,173,252,0.56)">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <router-link class="nav-link" to="/profile" style="color: white">MY PROFILE</router-link>

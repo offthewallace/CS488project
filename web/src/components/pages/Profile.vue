@@ -568,7 +568,7 @@
     }
 
     .btn {
-        background-color: #751b26;
+        background-color: rgba(8,134,229,0.96);
         color: white;
         border-radius: 5px;
         margin-top: 2vh
@@ -578,7 +578,7 @@
     }
 
     .fa-2x {
-        color: #751b26;
+        color: rgba(8,134,229,0.96);
     }
 
     .aStyle {

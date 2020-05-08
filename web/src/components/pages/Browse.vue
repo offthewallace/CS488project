@@ -59,7 +59,7 @@
                             <div class="row">
                                 <div class="col">
                                     <a v-on:click="getChoiceDislike">
-                                        <font-awesome-icon icon="thumbs-down" class="fa-4x"/>
+                                        <font-awesome-icon icon="thumbs-down" class="fa-4x" style="color: rgba(191, 22, 45, 0.96)"/>
                                     </a>
                                 </div>
                                 <div class="col">
@@ -289,7 +289,7 @@
         margin-top: 68px;
     }
     .colored {
-        background-color: #751b26;
+        background-color: rgba(8,134,229,0.96);
         color: white;
     }
 
@@ -303,8 +303,16 @@
         border: #3b2b49;
     }
 
-    .fa-2x, .fa-4x {
-        color: #751b26
+    .fa-2x {
+        color: rgba(8,134,229,0.96)
+    }
+
+    .fa-4x {
+        color: rgba(27, 175, 31, 0.96)
+    }
+
+    .fa-4x2 {
+        color: rgba(191, 22, 45, 0.96)
     }
 
     .rowStyle1 {
@@ -369,7 +377,7 @@
     }
 
     .btnStyle {
-        background-color: #751b26;
+        background-color: rgba(8,134,229,0.96);
         color: white;
         border-radius: 5px
     }

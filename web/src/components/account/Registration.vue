@@ -189,7 +189,7 @@
     }
 
     .btn-styles {
-        background-color: #751b26;
+        background-color: rgba(8,134,229,0.96);
         color: white;
         border-radius: 5px
     }
