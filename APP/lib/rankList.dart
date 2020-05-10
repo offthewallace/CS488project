@@ -6,12 +6,12 @@ import 'friend.dart';
 import 'chat.dart';
 import 'package:tinder_cards/MyHomePage.dart';
 
-class FriendsListPage extends StatefulWidget {
+class RankListPage extends StatefulWidget {
   @override
-  _FriendsListPageState createState() => new _FriendsListPageState();
+  _RankListPageState createState() => new _RankListPageState();
 }
 
-class _FriendsListPageState extends State<FriendsListPage> {
+class _RankListPageState extends State<RankListPage> {
   List<Friend> _friends = [];
 
   @override
@@ -19,12 +19,10 @@ class _FriendsListPageState extends State<FriendsListPage> {
     super.initState();
     _loadFriends();
   }
-    //'/match/find/?key=' + key
-  //https://78xsb883zk.execute-api.us-east-1.amazonaws.com/default/match/find
-  Future<void> _loadFriends() async {
 
+  Future<void> _loadFriends() async {
     http.Response response =
-    await http.get('https://randomuser.me/api/?results=10&nat=us&seed=123@456.com');
+    await http.get('https://randomuser.me/api/?results=10&nat=us&seed=123@45.com');
 
     setState(() {
       _friends = Friend.allFromResponse(response.body);
@@ -43,7 +41,7 @@ class _FriendsListPageState extends State<FriendsListPage> {
         ),
       ),
       title: new Text(friend.name),
-      subtitle: new Text(friend.email),
+      subtitle: new Text("No."+(index+1).toString()),
     );
   }
 
@@ -77,7 +75,7 @@ class _FriendsListPageState extends State<FriendsListPage> {
     }
 
     return new Scaffold(
-      appBar: new AppBar(title: new Text('Friends')),
+      appBar: new AppBar(title: new Text('Friends of ranking')),
       body: content,
     );
   }

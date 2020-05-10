@@ -5,19 +5,23 @@ dependencies:
   flame: ^0.19.1
   http: ^0.12.0+4
   cupertino_icons: ^0.1.2
-  firebase_auth: ^0.14.0+5
-  google_sign_in: ^4.0.7
-  cloud_firestore: ^0.12.9+5
   fluttertoast: ^3.1.3
   image_picker: ^0.6.1+8
   shared_preferences: ^0.5.3+4
-  firebase_storage: ^3.0.6
   cached_network_image: 2.0.0-rc.1
   intl: ^0.15.7
-  firebase_messaging: 6.0.13
   flutter_local_notifications: 1.4.0
   photo_view: ^0.5.0
   flutter_tindercard: ^0.1.7
+  collection: ^1.14.12
+  amazon_s3_cognito: '^0.2.0'
+  path_provider: ^1.6.7
+  story_view: ^0.12.2
+  circular_profile_avatar: ^1.0.6
+  agora_rtc_engine: 1.0.5
+  permission_handler: ^3.0.0
+
+
   flutter:
     sdk: flutter
 
@@ -44,24 +48,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/crate.png
-    - assets/images/bullet.png
-    - assets/images/explosion-0.png
-    - assets/images/explosion-1.png
-    - assets/images/explosion-2.png
-    - assets/images/explosion-3.png
-    - assets/images/explosion-4.png
-    - assets/images/explosion-5.png
-    - assets/images/explosion-6.png
-    - assets/audio/explosion.mp3
-    - assets/audio/miss.mp3
-    - assets/audio/music.ogg
-    - assets/images/gun.png
-    - assets/images/dragon.png
-    - assets/images/fire.png
-    - assets/images/background.jpg
     - res/test.jpeg
     - assets/
+    - assets/icon.png
+    - assets/images/sprite.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

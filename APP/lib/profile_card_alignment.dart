@@ -1,18 +1,44 @@
 import 'package:flutter/material.dart';
+import 'friend.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileCardAlignment extends StatelessWidget {
   final int cardNum;
-  ProfileCardAlignment(this.cardNum);
+  Friend _friends;
+
+  Friend get friends => _friends;
+
+  set friends(Friend friends) {
+    print(friends.avatar);
+    _friends = friends;
+  }
+
+  ProfileCardAlignment(this.cardNum) {
+    _loadFriends()
+      ..then((friends)=>{
+        this.friends = friends
+      });
+  }
+
+  Future<Friend> _loadFriends() async {
+    final http.Response response = await http.get('https://randomuser.me/api/?results=1');
+
+    //print(response.body);
+    return  Friend.allFromResponse(response.body)[0];
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_friends == null) {
+      return Card();
+    }
     return Card(
       child: Stack(
         children: <Widget>[
           SizedBox.expand(
             child: Material(
               borderRadius: BorderRadius.circular(12.0),
-              child: Image.asset('res/test.jpeg', fit: BoxFit.cover),
+              child: Image.network(_friends.avatar, fit: BoxFit.cover),
             ),
           ),
           SizedBox.expand(
@@ -32,13 +58,13 @@ class ProfileCardAlignment extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text('Card number $cardNum',
+                    Text(_friends.name,
                         style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.cyanAccent,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w700)),
                     Padding(padding: EdgeInsets.only(bottom: 8.0)),
-                    Text('A short description.',
+                    Text(_friends.location,
                         textAlign: TextAlign.start,
                         style: TextStyle(color: Colors.white)),
                   ],

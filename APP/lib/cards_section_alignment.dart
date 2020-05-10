@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'profile_card_alignment.dart';
 import 'dart:math';
+import 'friendList.dart';
+import 'friend.dart';
+import 'package:http/http.dart' as http;
+
+
+
+
 
 /*
 Future<User> createUser(String email, String password) async {
@@ -50,6 +57,8 @@ class CardsSectionAlignment extends StatefulWidget {
 class _CardsSectionState extends State<CardsSectionAlignment>
     with SingleTickerProviderStateMixin {
   int cardsCounter = 0;
+  List<Friend> _friends = [];
+
 
   List<ProfileCardAlignment> cards = List();
   //TODO: how to use this and how to trigger
@@ -62,6 +71,9 @@ class _CardsSectionState extends State<CardsSectionAlignment>
   @override
   void initState() {
     super.initState();
+    //_loadFriends();
+    //print('check friends');
+    //print(_friends);
 
     // Init cards
     for (cardsCounter = 0; cardsCounter < 3; cardsCounter++) {
@@ -78,6 +90,19 @@ class _CardsSectionState extends State<CardsSectionAlignment>
       if (status == AnimationStatus.completed) changeCardsOrder();
     });
   }
+
+  Future<void> _loadFriends() async {
+    http.Response response =
+    await http.get('https://randomuser.me/api/?results=25');
+
+    setState(() {
+      //print(response.body);
+      _friends = Friend.allFromResponse(response.body);
+      print("function friends");
+      print(_friends[0].name);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
